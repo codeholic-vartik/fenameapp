@@ -119,7 +119,7 @@ const handleSubmit = async (event) => {
 
   try {
     const response = await fetch(
-      "http://localhost/vartik/wowspace/wordpress/wp-json/fename/v1/bambora",
+      "https://new.icandalous.ca/wp-json/fename/v1/bambora",
       {
         method: "POST",
         headers: {
@@ -129,22 +129,33 @@ const handleSubmit = async (event) => {
       }
     );
 
+  // Check for HTTP status codes and handle accordingly
     if (!response.ok) {
-      // Handle error based on status code
       const errorData = await response.json();
-      if (response.status === 500) {
-        // Custom message for status 500
-        throw new Error(
-          "Payment failed: An unexpected error occurred. Please try again later."
-        );
-      } else if (errorData.code === "curl_error") {
-        throw new Error(
-          "Payment failed: Please check your internet connection and try again."
-        );
-      } else {
-        throw new Error(
-          "Payment failed: An unexpected error occurred. Please try again."
-        );
+
+      switch (response.status) {
+        case 400:
+          throw new Error("Bad Request: Please check the information provided.");
+        case 401:
+          throw new Error("Unauthorized: Please log in and try again.");
+        case 403:
+          throw new Error("Forbidden: You do not have permission to perform this action.");
+        case 404:
+          throw new Error("Not Found: The requested resource could not be found.");
+        case 500:
+          if (errorData.code === "curl_error") {
+            throw new Error(
+              "Network Error: Please check your internet connection and try again."
+            );
+          } else {
+            throw new Error(
+              "Server Error: An unexpected error occurred. Please try again later."
+            );
+          }
+        default:
+          throw new Error(
+            `Payment failed: ${errorData.message || "An unexpected error occurred."}`
+          );
       }
     }
 
@@ -185,18 +196,6 @@ for (let i = 0; i <= 10; i++) {
 
 <template>
   <div class="backdrop" v-if="true">
-    <!-- <div class="donation-modal">
-      <div class="donate-box">
-        <button type="button" class="cross-icon" @click="$emit('close')">X</button> -->
-
-    <!-- <div class="cd-model-title">
-          <h3>{{ title }}</h3>
-          <p>{{ description }}</p>
-        </div>
-        <div class="cd-separator"></div> -->
-
-    <!-- Loading Indicator -->
-
     <div class="cd-loading" v-if="isLoading">
       <span class="loader"></span>
 
@@ -544,10 +543,14 @@ for (let i = 0; i <= 10; i++) {
     <div v-if="apiResponse || error" class="response-message">
       <div class="donation-modal success-box">
         <div class="donate-box success-box">
-          <div class="cross-container"><button type="button" class="cross-icon" @click="$emit('close')">X</button></div>
+          <div class="cross-container">
+            <button type="button" class="cross-icon" @click="$emit('close')">X</button>
+          </div>
 
-          <p v-if="apiResponse" class="success-message">{{ apiResponse }}</p>
-          <p v-if="error" class="error-message">{{ error }} </p>
+          <p v-if="apiResponse" class="success-message">
+            {{ apiResponse }}
+          </p>
+          <p v-if="error" class="error-message">{{ error }}</p>
         </div>
       </div>
     </div>
@@ -737,14 +740,11 @@ for (let i = 0; i <= 10; i++) {
 }
 
 .success-box {
-  display:flex;
+  display: flex;
   flex-direction: column;
-  min-height:20vh;
-  min-width:400px;
+  min-height: 20vh;
+  min-width: 400px;
   justify-content: center;
   align-items: center;
-  
 }
-
-
 </style>
