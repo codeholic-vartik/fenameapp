@@ -1,0 +1,522 @@
+@import './base.css';
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: Nunito, sans-serif;
+}
+
+:root {
+  font-size: 16px;
+}
+
+#app{
+  background-color: white;
+}
+
+.cd-link-none{
+  text-decoration: none;
+}
+.cd-container {
+  background-color:#FFFFFF;
+  color: black;
+}
+.cd-inner-container{
+  /* margin: 0px 20px 00px 20px; */
+
+}
+.cd-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(0, 124, 22, .2);
+}
+
+.cd-card-logo {
+  width: 125px;
+}
+
+.cd-card-logo img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.cd-title-and-country {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.cd-leftside-card {
+  display: flex;
+  flex-direction: row;
+}
+
+.cd-leftside-card .cd-organization-name {
+  font-size: 28px;
+  font-weight: 600;
+  margin-left: 0;
+  text-align: center;
+}
+
+.cd-leftside-card .cd-city-and-country-name {
+  color: #9B9B9B;
+  font-size: 20px;
+  margin-top: 0;
+}
+
+.cd-card-follow-btn {
+  background-color: #007C16;
+  color: #FFFFFF;
+  border: 0px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2), 0 2px 10px 0 rgba(0, 0, 0, .1);
+  font-size: .75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  padding: 0.625rem 1.5rem 0.5rem;
+  text-transform: uppercase;
+}
+
+.cd-campaign {
+  cursor: pointer;
+}
+
+.cd-campaigns-or-contact {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.cd-separator{
+  margin: 0px 0px 10px 0px;
+  border-bottom: #BCBBBB solid 1px;
+}
+
+.cd-campaigns-or-contact .cd-selector-btns {
+  background-color: initial;
+  border: 1px solid #007C16;
+  color: #9B9B9B;
+  color: #007C16;
+  flex: 1 1;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  outline: none;
+  padding: 10px 14px;
+}
+
+.cd-campaign-msg {
+  color: #9B9B9B;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  margin-top: 20px;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.cd-campaign-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.cd-campaign-box .cd-campaign {
+  align-items: center;
+  border: 1px solid #EAEAEA;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  justify-content: center;
+  margin: 20px;
+  position: relative;
+  width: 300px;
+}
+
+.cd-campaign .cd-campaign-icon {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.cd-campaign-icon-img {
+  width: 100%;
+  height: 100%;
+}
+
+#cd-contact-content-wrapper {
+  margin-top: 30px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+.cd-get-in-touch-heading {
+  color: #007C16;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  margin-bottom: 20px;
+}
+
+.cd-contact-info-box h6 {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cd-contact-info-p-row {
+  display: flex;
+  margin: 5px 0px;
+}
+
+.cd-contact-info-p-row-content {
+  margin-left: 7px;
+}
+
+.cd-contact-info-p-row-content a {
+  color: #007C16;
+}
+
+.cd-campaigns-or-contact .cd-selector-btns.active {
+  background-color: #007C16;
+  color: white;
+}
+
+.cd-tab-content {
+  /* display: none; */
+}
+
+.cd-tab-container {
+  background-color: #fff;
+}
+
+.cd-router-link {
+
+  text-decoration: none;
+  color: black;
+}
+
+.cd-donation-box {
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  width: 400px;
+}
+
+.cd-donation-text {
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.cd-minimum-amount-msg {
+  display: flex;
+  flex-direction: column;
+  font-weight: 200;
+
+}
+
+.cd-donation-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.cd-form-container {
+  width: 100%;
+}
+
+.cd-input-field {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+  margin-bottom: 10px;
+  outline: none;
+  background-color: #fff !important;
+  border: auto !important;
+  border: 1px solid rgb(221, 221, 221) !important;
+}
+
+
+.cd-input-field:focus {
+  border-color: #007c16 !important; 
+  outline: none; 
+  border-radius: 4px;
+  background-color: #fff !important;
+}
+
+.cd-input-field:-webkit-autofill {
+  background-color: #fff !important; 
+  color: #333 !important; 
+  border-color: green !important; 
+}
+
+.cd-input-field::-webkit-inner-spin-button,
+.cd-input-field::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide default spinner controls in Firefox */
+.cd-input-field[type="number"] {
+  -moz-appearance: textfield;
+}
+.cd-card-donate-btn {
+  color: #fff;
+  align-items: center;
+  background-color: #007c16 !important;
+  box-shadow: none;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  margin-left: 5px;
+  overflow: hidden;
+  text-align: center;
+  width: fit-content;
+  padding: 16px 30px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+}
+.cd-card-donate-btn-unselected{
+  color: #333333;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: none;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  margin-left: 5px;
+  overflow: hidden;
+  text-align: center;
+  width: fit-content;
+  padding: 16px 30px;
+  margin-bottom: 10px;
+  border: 2px solid green;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.cd-campaign-collection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cd-collection-box,
+.collection-box {
+  text-align: center;
+  flex: 1;
+  padding: 20px;
+  margin: 0 10px;
+  border-right: solid 1px black;
+
+}
+
+.collection-box:last-child {
+  border-right: none;
+}
+
+.cd-collection-box h4,
+.collection-box h4 {
+  font-size: 24px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.cd-collection-box h6,
+.collection-box h6 {
+  font-size: 14px;
+  color: #777777;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.collection-box.last {
+  margin-right: 0;
+}
+
+.cd-collection-box:first-child {
+  margin-left: 0;
+}
+
+.cd-name {
+  display: flex;
+  gap: 4px;
+}
+
+.cd-btn-right{
+  display: flex;
+  text-align: end;
+  justify-content: flex-end;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.cd-model-form{
+  display: flex;
+  justify-content: space-between;
+}
+.cd-btn-model {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cd-btn-end {
+  justify-content: flex-end;
+}
+
+.cd-back-btn {
+  background-color: #6C757D;
+  color: #fff;
+  border: 2px solid black;
+  box-shadow: none;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  margin-left: 5px;
+  overflow: hidden;
+  text-align: center;
+  width: fit-content;
+  padding: 16px 30px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cd-next-btn {
+  color: white;
+}
+
+.cd-model-title{
+
+  text-align: center;
+  margin: 0 auto;
+}
+
+.cd-model-title > h3 {
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+.cd-model-title > p {
+color: #4F4F4F;
+}
+.cd-form-full-height{
+  height: 100%;
+}
+.cd-form-input{
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+  height: 100%;
+  
+
+}
+.cd-main-card{
+
+  max-width: 80%;
+  align-self: center;
+  margin:0 auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding-bottom: 60px;
+
+}
+@media screen and (max-width: 1024px) {
+  .cd-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cd-leftside-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+  }
+
+  .cd-title-and-country {
+    align-items: center;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+
+  .cd-leftside-card .cd-organization-name {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .cd-card-follow-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .cd-donation-box {
+
+    width: 100%;
+  }
+
+  .cd-rightside-donation-card {
+    width: 100%;
+
+  }
+
+}
+
+.cd-recurring-options {
+
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin:10px 0px;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .cd-campaign-collection {
+    flex-direction: column;
+  }
+
+  .cd-collection-box,
+  .collection-box {
+    margin: 10px 0;
+    border-right: none;
+    border-bottom: black solid 1px;
+    width: calc(100% - 40px);
+
+  }
+}

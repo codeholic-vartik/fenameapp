@@ -1,0 +1,58 @@
+[
+  {
+      "id": 1,
+      "tabName": "campaigns",
+      "tabItems": [
+          
+          {
+              "id": 1,
+              "itemName": "SADAQA",
+              "itemDescription": "Centre Islamique Al-Andalous",
+              "itemImage": "https://new.icandalous.ca/wp-content/uploads/2024/09/zakat.png",
+              "itemURL": "/sadaqa"
+          },
+          {
+              "id": 2,
+              "itemName": "TRAVAUX DE STRUCTURE",
+              "itemDescription": "Centre Islamique Al-Andalous",
+              "itemImage": "https://new.icandalous.ca/wp-content/uploads/2024/09/construction.png",
+              "itemURL": "/travauxdestructure",
+              "progress":"10"
+          },
+          {
+              "id": 3,
+              "itemName": "ZAKAT AL-MAL",
+              "itemDescription": "Centre Islamique Al-Andalous",
+              "itemImage": "https://new.icandalous.ca/wp-content/uploads/2024/09/zakat-1.png",
+              "itemURL": "/zakatalmal"
+          }
+      ]
+  },
+  {
+      "id": 2,
+      "tabName": "contact",
+      "tabItems": [
+        {
+          "title": "GET IN TOUCH",
+          "organization": "Centre Islamique Al-Andalous",
+          "address": {
+            "text": "816 Sainte-Croix Ave, Saint-Laurent QC H4L 3Y4 Canada",
+            "icon": "/src/assets/icons/address-icon.svg"
+          },
+          "phone": {
+            "text": "514-360-2360",
+            "icon": "/src/assets/icons/phone-icon.svg"
+          },
+          "email": {
+            "text": "info@icandalous.ca",
+            "icon": "/src/assets/icons/email-icon.svg"
+          },
+          "website": {
+            "text": "https://www.icandalous.ca",
+            "icon": "/src/assets/icons/website-icon.svg"
+          }
+        }
+      ]
+    }
+    
+]
