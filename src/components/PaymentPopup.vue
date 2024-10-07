@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { API_BASE_URL, BAMBORA_PAYMENT_ROUTE_PATH } from "@/config/config.js";
 const props = defineProps({
   amount: {
     type: String,
@@ -20,7 +21,7 @@ const step = ref(1);
 const apiResponse = ref(null);
 const isLoading = ref(false);
 const error = ref(null);
-
+const envVariable = ref(import.meta.env);
 watch(
   () => props.amount,
   (newAmount) => {
@@ -106,46 +107,52 @@ const resetForm = () => {
 };
 
 const handleSubmit = async (event) => {
-  event.preventDefault();
-  isLoading.value = true;
-  apiResponse.value = null;
-  error.value = null;
+  event.preventDefault(); // Prevent the default form submission behavior
+  isLoading.value = true; // Set the loading state
+  apiResponse.value = null; // Clear previous API response
+  error.value = null; // Clear previous error
 
+  // Collecting form data
   const formData = {
     userInfo: userInfo.value,
     donationDetails: donationDetails.value,
     paymentDetails: paymentDetails.value,
   };
+  // console.log(formData); // Log form data for debugging
 
   try {
-    const response = await fetch(
-      "https://new.icandalous.ca/wp-json/fename/v1/bambora",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+    // console.log(    `${API_BASE_URL}${BAMBORA_PAYMENT_ROUTE_PATH}`)
+    // Make the API call using fetch
+    const response = await fetch(`${API_BASE_URL}${BAMBORA_PAYMENT_ROUTE_PATH}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Specify the content type
+      },
+      body: JSON.stringify(formData), // Send form data as JSON
+    });
 
-  // Check for HTTP status codes and handle accordingly
+    // console.log(response); // Log the raw response for debugging
+
+    // Check for HTTP status codes and handle accordingly
     if (!response.ok) {
-      const errorData = await response.json();
+      const errorData = await response.json(); // Extract error details from the response
 
+      // Handle different HTTP status codes
       switch (response.status) {
         case 400:
           throw new Error("Bad Request: Please check the information provided.");
         case 401:
           throw new Error("Unauthorized: Please log in and try again.");
         case 403:
-          throw new Error("Forbidden: You do not have permission to perform this action.");
+          throw new Error(
+            "Forbidden: You do not have permission to perform this action."
+          );
         case 404:
           throw new Error("Not Found: The requested resource could not be found.");
         case 500:
           if (errorData.code === "curl_error") {
             throw new Error(
-              "Network Error: Please check your internet connection and try again."
+              `Network Error: ${errorData.message}. Please try again later.`
             );
           } else {
             throw new Error(
@@ -159,15 +166,15 @@ const handleSubmit = async (event) => {
       }
     }
 
-    // const data = await response.json();
-    // console.log("API Response:", data);
-    apiResponse.value = "Payment successful! Thank you for your donation.";
-    // console.log("API Response:", apiResponse.value);
+    // Assuming successful response processing
+    // const data = await response.json(); // Uncomment this if you want to process the response data
+    apiResponse.value = "Payment successful! Thank you for your donation."; // Success message
+    console.log("API Response:", apiResponse.value);
   } catch (err) {
-    // console.error("API Error:", err.message);
-    error.value = `${err.message}`;
+    console.error("API Error:", err.message); // Log the error message for debugging
+    error.value = `${err.message}`; // Set the error message in the UI
   } finally {
-    isLoading.value = false;
+    isLoading.value = false; // Stop loading indicator
   }
 };
 
@@ -334,7 +341,7 @@ for (let i = 0; i <= 10; i++) {
                             'cd-toggle-unselected':
                               donationDetails.payment_recurring_type_value !== 'daily',
                           }"
-                          class="cd-toggle-button"
+                          class="cd-toggle-button cd-toggle-button-child"
                           type="button"
                           @click="donationDetails.payment_recurring_type_value = 'daily'"
                         >
@@ -347,7 +354,7 @@ for (let i = 0; i <= 10; i++) {
                             'cd-toggle-unselected':
                               donationDetails.payment_recurring_type_value !== 'weekly',
                           }"
-                          class="cd-toggle-button"
+                          class="cd-toggle-button cd-toggle-button-child"
                           type="button"
                           @click="donationDetails.payment_recurring_type_value = 'weekly'"
                         >
@@ -360,7 +367,7 @@ for (let i = 0; i <= 10; i++) {
                             'cd-toggle-unselected':
                               donationDetails.payment_recurring_type_value !== 'monthly',
                           }"
-                          class="cd-toggle-button"
+                          class="cd-toggle-button cd-toggle-button-child"
                           type="button"
                           @click="
                             donationDetails.payment_recurring_type_value = 'monthly'
@@ -386,14 +393,15 @@ for (let i = 0; i <= 10; i++) {
                       >
                         PayPal
                       </button>
+
+                      <!-- Value is changed from credit_card to card  07-10-2024  -->
                       <button
                         :class="{
-                          'cd-card-donate-btn':
-                            donationDetails.paymentType === 'credit_card',
+                          'cd-card-donate-btn': donationDetails.paymentType === 'card',
                           'cd-card-donate-btn-unselected':
-                            donationDetails.paymentType !== 'credit_card',
+                            donationDetails.paymentType !== 'card',
                         }"
-                        @click="donationDetails.paymentType = 'credit_card'"
+                        @click="donationDetails.paymentType = 'card'"
                         type="button"
                       >
                         Credit Card
@@ -414,7 +422,7 @@ for (let i = 0; i <= 10; i++) {
                   </div>
                   <!-- Group Button End  -->
                   <!-- Credit card template Start  -->
-                  <template v-if="donationDetails.paymentType === 'credit_card'">
+                  <template v-if="donationDetails.paymentType === 'card'">
                     <label for="card-number">Cardholder Name</label>
                     <input
                       v-model="paymentDetails.cardholderName"
@@ -511,7 +519,7 @@ for (let i = 0; i <= 10; i++) {
                     />
                   </template>
                   <template v-if="donationDetails.paymentType === 'paypal'">
-                    <label for="paypal-email">PayPal</label>
+                    <!-- <label for="paypal-email">PayPal</label> -->
                     <div id="paypal-button-container"></div>
                   </template>
                 </div>
@@ -523,7 +531,7 @@ for (let i = 0; i <= 10; i++) {
                 </button>
                 <button
                   v-if="
-                    donationDetails.paymentType === 'credit_card' ||
+                    donationDetails.paymentType === 'card' ||
                     donationDetails.paymentType === 'bank_account'
                   "
                   class="cd-card-donate-btn cd-next-btn cd-absolute-right"
@@ -612,6 +620,7 @@ for (let i = 0; i <= 10; i++) {
 .cd-group-btn {
   display: flex;
   gap: 20px;
+  margin: 10px 0px;
 }
 .backdrop {
   align-items: center;
@@ -664,8 +673,10 @@ for (let i = 0; i <= 10; i++) {
 
 .cd-toggle-buttons {
   display: flex;
-  gap: 1em;
-  margin: 5px 0px 10px 0px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px 0px;
+  gap: 3vw;
 }
 
 .cd-toggle-button {
@@ -681,12 +692,17 @@ for (let i = 0; i <= 10; i++) {
 }
 
 .cd-toggle-selected {
+  min-width: 8vw;
   background-color: green;
   color: white;
   border-color: green;
 }
+.cd-toggle-button-child {
+  padding: 7px;
+}
 
 .cd-toggle-unselected {
+  min-width: 8vw;
   background-color: white;
   color: green;
 }
