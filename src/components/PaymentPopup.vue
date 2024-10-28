@@ -7,6 +7,8 @@ import {
   CREATE_STRIPE_PAYMENT_INTENT_ROUTE,
   CREATE_STRIPE_CREATE_PAYMENT_ROUTE,
 } from "@/config/config.js";
+
+import {formatText} from "@/config/support.js";
 import { Country, State, City } from "country-state-city";
 import StripePayment from "@/components/ui/StripePayment.vue";
 
@@ -42,8 +44,11 @@ const stripeClientSecret = ref(null);
 const loadingStripe = ref(false);
 const stripePaymentIntentId = ref(null);
 const isStripeLoading = ref(false);
+const campaignName = ref(props.title);
+console.log(formatText(campaignName.value));
 
-// console.log(props.title);
+
+
 
 watch(
   () => props.amount,
@@ -68,6 +73,7 @@ const userInfo = ref({
 });
 
 const donationDetails = ref({
+  campaignName: formatText(campaignName.value),
   amount: props.amount,
   paymentType: "paypal",
   payment_recurring_type: "one_time",
@@ -377,6 +383,8 @@ watch(
     }
   }
 );
+
+// Stripe implementation  Start  
 const loadStripe = () => {
   return new Promise((resolve) => {
     const script = document.createElement("script");
@@ -386,11 +394,13 @@ const loadStripe = () => {
   });
 };
 
+// load stripe initially
 onMounted(async () => {
   await loadStripe();
   stripe.value = Stripe(`${STRIPE_PUBLISHED_KEY}`);
 });
 
+// function to set payment 
 const setPaymentType = async (type) => {
   event.preventDefault(); // Prevent the default form submission behavior
 
@@ -454,7 +464,7 @@ const setPaymentType = async (type) => {
 
       submitButton.addEventListener("click", async (event) => {
         event.preventDefault(); // Prevent any default button behavior
-        console.log(isRecurring);
+        // console.log(isRecurring);
         if (isRecurring == true) {
           // For SetupIntent
           // const { error, setupIntent } = await stripe.value.confirmSetup({
@@ -507,11 +517,11 @@ const setPaymentType = async (type) => {
               }
             );
 
-            console.log(response);
+            // console.log(response);
           }
 
           const paymentMethodId = setupError.payment_method;
-          console.log(paymentMethodId);
+          // console.log(paymentMethodId);
         } else {
           // Proceed with payment confirmation
           const { error, paymentIntent } = await stripe.value.confirmPayment({
@@ -529,7 +539,7 @@ const setPaymentType = async (type) => {
           alert(error.message);
         } else {
           // Payment successful, redirect or show a success message
-          console.log("Payment successful!");
+          // console.log("Payment successful!");
 
           // Collecting form data
           const formData = {
@@ -578,7 +588,7 @@ const setPaymentType = async (type) => {
 watch(
   () => donationDetails.value.amount, // Watch the `amount` field
   async (newAmount, oldAmount) => {
-    console.log(`Amount changed from ${oldAmount} to ${newAmount}`);
+    // console.log(`Amount changed from ${oldAmount} to ${newAmount}`);
     if (newAmount !== oldAmount && donationDetails.value.paymentType === "bank_account") {
       // Recreate the payment intent with the updated amount only if the payment type is "bank_account"
       await setPaymentType(donationDetails.value.paymentType); // Re-trigger payment creation
@@ -586,6 +596,10 @@ watch(
   }
 );
 
+
+// Stripe implementation  End
+
+// Handel from submission 
 const handleSubmit = async (event) => {
   event.preventDefault(); // Prevent the default form submission behavior
   isLoading.value = true; // Set the loading state
@@ -613,7 +627,7 @@ const handleSubmit = async (event) => {
         body: JSON.stringify(formData), // Send form data as JSON
       });
 
-      console.log("Response:", response); // Log the raw response for debugging
+      // console.log("Response:", response); // Log the raw response for debugging
 
       // Check for HTTP status codes and handle accordingly
       if (!response.ok) {
@@ -669,6 +683,7 @@ const handleSubmit = async (event) => {
 
   isLoading.value = false; // Stop loading indicator at the end
 };
+
 </script>
 
 <template>

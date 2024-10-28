@@ -23,7 +23,7 @@ const response = await fetch(
 // }
 
 const { clientSecret } = await response.json();
-console.log("Client secret:", clientSecret);
+// console.log("Client secret:", clientSecret);
 </script>
 
 <template>
