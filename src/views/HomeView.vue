@@ -13,6 +13,7 @@ const data = ref(jsonData[3]);
 </script>
 
 <template>
+
   <main class="cd-main-card">
 
   
@@ -20,5 +21,7 @@ const data = ref(jsonData[3]);
     <CardHeader :data="data" />
     <!-- <TabComponents :data="data" :msg="msg" /> -->
     <Tabs :data="data"  />
+
+
   </main>
 </template>
